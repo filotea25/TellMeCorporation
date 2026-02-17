@@ -64,4 +64,10 @@ public class RegistroService {
         registro.setEstado(nuevoEstado);
         return registroRepository.save(registro);
     }
+
+    //borrar por id
+    public void deleteById(Long id) {
+    registroRepository.deleteById(id);
+}
+
 }

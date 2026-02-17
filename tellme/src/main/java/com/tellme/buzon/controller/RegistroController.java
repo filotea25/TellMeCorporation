@@ -3,7 +3,9 @@ package com.tellme.buzon.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,10 +52,22 @@ public class RegistroController {
         return res.buscarPorEstado(estado);
     }
 
-    // PUT /api/registros/{id}/estado?nuevoEstado=RESUELTO
+   
+//cambiar el estado del registro
     @PutMapping("/{id}/estado")
-    public Registro cambiarEstado(@PathVariable Long id,
-                                  @RequestParam EstadoRegistro nuevoEstado) {
-        return res.cambiarEstado(id, nuevoEstado);
+    public ResponseEntity<Registro> cambiarEstado(
+        @PathVariable Long id,
+        @RequestParam EstadoRegistro estado) {
+
+    Registro actualizado = res.cambiarEstado(id, estado);
+    return ResponseEntity.ok(actualizado);
     }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    res.deleteById(id);
+    return ResponseEntity.noContent().build();
+    }
+
 }

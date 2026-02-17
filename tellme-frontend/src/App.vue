@@ -5,6 +5,7 @@ import PanelRegistros from './components/PanelRegistros.vue'
 
 const tipoSeleccionado = ref(null)
 const vistaActual = ref(null)
+
 function abrirFormulario(tipo) {
   tipoSeleccionado.value = tipo
   vistaActual.value = 'FORM'
@@ -22,7 +23,10 @@ function cerrarVista() {
 
 <template>
   <header class="header">
-    <div class="logo">TellMe Corporation</div>
+    <div class="logo-text">
+      TellMe<span style="color:green;">App</span>
+    </div>
+
 
     <div class="nav">
       <button @click="abrirFormulario('SUGERENCIA')">
@@ -36,9 +40,11 @@ function cerrarVista() {
       <button @click="abrirFormulario('ENCARGO')">
         Encargo
       </button>
+
       <button @click="abrirPanel">
-  📋    Registros
+        📋 Registros
       </button>
+
       <button class="login-btn">
         👤 Login
       </button>
@@ -47,38 +53,61 @@ function cerrarVista() {
 
   <main class="main">
 
-  <h1 v-if="!vistaActual" class="hero-title">
-  <span class="gradient-text">
-    La comunicación nos hace mejores
-  </span>
-</h1>
 
-  <div v-if="vistaActual" class="vista-container">
+    <!-- HERO CON LOGO -->
+    <div v-if="!vistaActual" class="hero-container">
+      <img 
+        src="../images/tellme_logo_black.jpg" 
+        alt="TellMeApp Logo"
+        class="hero-logo"
+      />
 
-    <RegistroForm 
-      v-if="vistaActual === 'FORM'" 
-      :tipo="tipoSeleccionado" 
-    />
+      <h1 class="hero-title">
+        La comunicación interna
+        <br />
+        impulsa el crecimiento empresarial
+      </h1>
 
-    <PanelRegistros 
-      v-if="vistaActual === 'PANEL'" 
-    />
+      <p class="hero-subtitle">
+        Registra incidencias, sugerencias y encargos
+        de forma estructurada y profesional.
+      </p>
+    </div>
 
-    <button class="cerrar" @click="cerrarVista">
-      Cerrar
-    </button>
+    <!-- VISTAS -->
+    <div v-if="vistaActual" class="vista-container">
 
-  </div>
+      <RegistroForm 
+        v-if="vistaActual === 'FORM'" 
+        :tipo="tipoSeleccionado" 
+      />
 
-</main>
+      <PanelRegistros 
+        v-if="vistaActual === 'PANEL'" 
+      />
 
+      <button class="cerrar" @click="cerrarVista">
+        Cerrar
+      </button>
+
+    </div>
+
+  </main>
 </template>
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  
 }
+.main {
+  min-height: calc(100vh - 70px);
+  padding: 40px 60px;
+  background: #D8DBD3;
+}
+
+
 
 .header {
   background-color: #1e2a38;
@@ -89,7 +118,7 @@ body {
   padding: 15px 30px;
 }
 
-.logo {
+.logo-text {
   font-size: 20px;
   font-weight: bold;
 }
@@ -108,32 +137,6 @@ body {
   background-color: #2563eb;
 }
 
-.login {
-  background-color: #10b981;
-}
-
-.main {
-  min-height: calc(100vh - 70px);
-  padding: 40px 60px;
-  background: #f1f5f9;
-}
-
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cerrar {
-  margin-top: 15px;
-  padding: 6px 12px;
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 .login-btn {
   background: transparent;
   border: 1px solid #4da3ff;
@@ -148,15 +151,45 @@ body {
   background: #4da3ff;
   color: white;
 }
+
+.main {
+  min-height: calc(100vh - 70px);
+  padding: 40px 60px;
+  background: #f1f5f9;
+}
+
+/* HERO */
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.hero-logo {
+  width: 200px;
+  margin-bottom: 25px;
+  animation: fadeSlide 1.2s ease forwards;
+}
+
 .hero-title {
   font-size: 42px;
   font-weight: 700;
-  text-align: center;
-  animation: fadeSlide 1.2s ease forwards;
   opacity: 0;
+  animation: fadeSlide 1.2s ease forwards;
+  animation-delay: 0.4s;
+  color:green;
+}
+.hero-subtitle {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #475569;
+  max-width: 600px;
 }
 
-/* Gradiente verde elegante */
+/* Gradiente animado */
 .gradient-text {
   background: linear-gradient(
     90deg,
@@ -172,7 +205,7 @@ body {
   animation: gradientMove 6s ease infinite;
 }
 
-/* Animación entrada */
+/* Animaciones */
 @keyframes fadeSlide {
   from {
     transform: translateY(20px);
@@ -184,17 +217,30 @@ body {
   }
 }
 
-/* Movimiento suave del degradado */
 @keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.vista-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cerrar {
+  margin-top: 15px;
+  padding: 6px 12px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  background-color: #b91c1c;
 }
 
 </style>

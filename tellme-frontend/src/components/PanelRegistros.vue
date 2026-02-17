@@ -9,7 +9,7 @@ const cargarRegistros = async () => {
   cargando.value = true
 
   try {
-    const response = await fetch('http://localhost:8080/api/registros')
+    const response = await fetch('http://localhost:3000/api/registros')
 
     if (!response.ok) {
       throw new Error('Error HTTP')
@@ -22,6 +22,40 @@ const cargarRegistros = async () => {
     alert('Error cargando registros')
   } finally {
     cargando.value = false
+  }
+}
+
+const cambiarEstado = async (id, nuevoEstado) => {
+  try {
+    await fetch(
+      `http://localhost:3000/api/registros/${id}/estado?estado=${nuevoEstado}`,
+      { method: 'PUT' }
+    )
+
+    cargarRegistros()
+
+  } catch (error) {
+    alert("Error actualizando estado")
+    console.error(error)
+  }
+}
+
+const eliminarRegistro = async (id) => {
+  if (!confirm("¿Seguro que quieres eliminar este registro?")) return
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/registros/${id}`,
+      { method: 'DELETE' }
+    )
+
+    if (!response.ok) throw new Error("Error eliminando")
+
+    cargarRegistros()
+
+  } catch (error) {
+    alert("Error eliminando registro")
+    console.error(error)
   }
 }
 
@@ -68,7 +102,15 @@ const registrosFiltrados = computed(() => {
 
         <h3>{{ registro.titulo }}</h3>
 
-        <p>{{ registro.descripcion }}</p>
+          <p class="autor">
+            Creado por: {{ registro.nombre }}
+          </p>
+
+          <p class="departamento">
+            Departamento: {{ registro.departamento }}
+          </p>
+
+          <p>{{ registro.descripcion }}</p>
 
         <div class="bottom">
           <span 
@@ -82,6 +124,29 @@ const registrosFiltrados = computed(() => {
             {{ new Date(registro.fechaCreacion).toLocaleString() }}
           </span>
         </div>
+
+        <!-- ACCIONES -->
+        <div class="acciones">
+
+          <select 
+            class="select-estado"
+            @change="cambiarEstado(registro.id, $event.target.value)"
+          >
+            <option disabled selected>Gestionar</option>
+            <option value="EN_PROCESO">En proceso</option>
+            <option value="RESUELTO">Resuelto</option>
+            <option value="RECHAZADO">Rechazado</option>
+          </select>
+
+          <button 
+            class="btn-delete-small"
+            @click="eliminarRegistro(registro.id)"
+          >
+            🗑
+          </button>
+
+        </div>
+
       </div>
 
       <div 
@@ -197,6 +262,69 @@ const registrosFiltrados = computed(() => {
   margin-top: 50px;
   font-size: 18px;
 }
+.departamento {
+  font-size: 13px;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+
+.acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  align-items: center;
+}
+
+/* Select de gestionar */
+.select-estado {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 13px;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.select-estado:hover {
+  border-color: #2563eb;
+}
+
+/* Botón eliminar pequeño */
+.btn-delete-small {
+  width: 42px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.btn-delete-small:hover {
+  background: #b91c1c;
+}
+
+.autor {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+
+
 
 </style>
 

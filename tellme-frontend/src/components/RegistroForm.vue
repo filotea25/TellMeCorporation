@@ -24,20 +24,24 @@ const prioridad = computed(() => {
 const crearRegistro = async () => {
   try {
     const response = await fetch(
-      'http://localhost:8080/api/registros?empleadoId=1',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          titulo: titulo.value,
-          descripcion: descripcion.value,
-          tipo: props.tipo,
-          prioridad: prioridad.value
-        })
-      }
-    )
+  'http://localhost:3000/api/registros',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      titulo: titulo.value,
+      descripcion: descripcion.value,
+      tipo: props.tipo,
+      prioridad: prioridad.value,
+      nombre: nombre.value,
+      departamento: departamento.value,
+      estado: "NUEVO"
+    })
+  }
+)
+
 
     if (!response.ok) {
       const errorText = await response.text()

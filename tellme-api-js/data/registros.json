@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1771235444147,
+    "titulo": "Sistema jackeado",
+    "descripcion": "Esta mañana a las 8:45 nos hemos dado cuenta que nuestra base de datos ha sido atacada por un malware.",
+    "tipo": "INCIDENCIA",
+    "prioridad": "ALTA",
+    "estado": "RESUELTO",
+    "fechaCreacion": "2026-02-16T09:50:44.147Z"
+  },
+  {
+    "id": 1771235635951,
+    "titulo": "Compra de 5 monitores nuevos",
+    "descripcion": "Se han incorporado 3 practicantes en área de produccion por ello se solicita la Compra de 5 monitores nuevos.",
+    "tipo": "ENCARGO",
+    "prioridad": "MEDIA",
+    "estado": "NUEVO",
+    "fechaCreacion": "2026-02-16T09:53:55.951Z"
+  }
+]
