@@ -5,7 +5,7 @@
     "descripcion": "La Base de datos ha sido atacada a las 13:00",
     "tipo": "INCIDENCIA",
     "prioridad": "ALTA",
-    "estado": "RECHAZADO",
+    "estado": "RESUELTO",
     "nombre": "Marc Antony",
     "departamento": "IT",
     "fechaCreacion": "2026-02-16T10:19:58.946Z"
